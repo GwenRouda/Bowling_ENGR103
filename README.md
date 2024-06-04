@@ -15,6 +15,6 @@ Neopixel LEDs: outputs white light to represent pins left remaining after each b
 The game simulates bowling. Player clicks the button to roll each ball. 
 
 ## Scoring
-Each pin down = 1 point
-Spare = 10 + next roll
-Strike = 10 + next two roll
+Each pin down = 1 point. 
+Spare = 10 + next roll. 
+Strike = 10 + next two roll. 
