@@ -47,7 +47,7 @@ void setup() {
   CircuitPlayground.begin();//CPX setup
   Serial.begin(9600); //Serial setup
   while(!Serial);
-  //randomSeed(analogRead(0));
+  randomSeed(CircuitPlayground.readCap(1));
   //interrupts
   attachInterrupt(digitalPinToInterrupt(SwitchPin), Switched, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ButtPin), Buttons, LOW);
@@ -67,6 +67,7 @@ void loop() {
 
   if(gameState)
   {
+    CircuitPlayground.redLED(true);
     if(buttFlag)
     {
       delay(10);
@@ -88,16 +89,11 @@ void loop() {
       frames[roundAt][roll] = curRoll; //save it to array
       Serial.print("Pins Hit: ");
       Serial.println(frames[roundAt][roll]);
-      /*if(lights > 0)
+      CircuitPlayground.clearPixels();
+      for(int k = 0; k < lights; k++)
       {
-        for(int k = 0; k < lights; k++)
-        {
-          CircuitPlayground.setPixelColor(k,200,200,200);
-          delay(10);
-        }
-        delay(1000);
-        CircuitPlayground.clearPixels();
-      }*/
+        CircuitPlayground.setPixelColor(k,200,200,200);
+      }
 
       if(roll) //if second roll then next is also next round, and fill total array
       {
@@ -115,6 +111,8 @@ void loop() {
           //replace total for last round with corrected score
           total[roundAt - 1] = frames[roundAt - 1][roll] + frames[roundAt - 1][roll-1];
         }
+        delay(1000);
+        CircuitPlayground.clearPixels();
         roundAt++;
       }
       roll = !roll; //set to next roll
@@ -151,6 +149,10 @@ void loop() {
       }
       buttFlag = false;
     }
+  }
+  else
+  {
+    CircuitPlayground.redLED(false);
   }
 }
 
