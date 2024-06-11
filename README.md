@@ -30,4 +30,4 @@ The game simulates 1 player bowling. Player clicks the button to roll each ball.
 Each pin down = 1 point. 
 Spare = 10 + next roll. 
 Strike = 10 + next two roll. 
-Max Points : 200
+Max Points : 280 (no additional frame in this game if a strike/spare is rolled in the last frame)
