@@ -46,8 +46,8 @@ void setup() {
   // put your setup code here, to run once:
   CircuitPlayground.begin();//CPX setup
   Serial.begin(9600); //Serial setup
-  while(!Serial);
-  randomSeed(CircuitPlayground.readCap(1));
+  while(!Serial); //Don't start until serialopened
+  randomSeed(CircuitPlayground.readCap(1)); //sets random based on capacitance so the game is more random each tijme
   //interrupts
   attachInterrupt(digitalPinToInterrupt(SwitchPin), Switched, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ButtPin), Buttons, LOW);
@@ -57,18 +57,18 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if(switchFlag)
+  if(switchFlag) //if switch game on/off
   {
     delay(5);
     Serial.println("Switched");
-    gameState = CircuitPlayground.slideSwitch();
+    gameState = CircuitPlayground.slideSwitch(); 
     switchFlag = false;
   }
 
-  if(gameState)
+  if(gameState) //if game playing
   {
     CircuitPlayground.redLED(true);
-    if(buttFlag)
+    if(buttFlag) //button pressed
     {
       delay(10);
       Serial.println("Button Pressed");
@@ -89,8 +89,8 @@ void loop() {
       frames[roundAt][roll] = curRoll; //save it to array
       Serial.print("Pins Hit: ");
       Serial.println(frames[roundAt][roll]);
-      CircuitPlayground.clearPixels();
-      for(int k = 0; k < lights; k++)
+      CircuitPlayground.clearPixels(); 
+      for(int k = 0; k < lights; k++) //show remaining pins on pixels
       {
         CircuitPlayground.setPixelColor(k,200,200,200);
       }
@@ -121,10 +121,10 @@ void loop() {
 
       if(roundAt > 9)
       {
-        gameState = false;
+        gameState = false; //game over
         Serial.println();
         Serial.println("------Game Over------");
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 10; i++) //print game scoreboard and total
         {
           Serial.print("Round: ");
           Serial.print(i);
@@ -144,7 +144,7 @@ void loop() {
       }
       else
       {
-        Serial.println("Press button to roll again");
+        Serial.println("Press button to roll again"); //prompt player
         Serial.println();
       }
       buttFlag = false;
@@ -152,7 +152,7 @@ void loop() {
   }
   else
   {
-    CircuitPlayground.redLED(false);
+    CircuitPlayground.redLED(false); //turn off red LED
   }
 }
 
